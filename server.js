@@ -90,21 +90,57 @@ app.post("/saved/:id", function(req, res) {
     })
 });
 
-
-//Post new note
-app.post("/articles/:id", function(req,res){
-     console.log(req.params)
-    //  console.log(data)
-    db.Note.create(req.params.id).then(function(dbNote){
-        return db.Article.findOneAndUpdate({_id: req.params.id }, { $push: { notes: dbNote._id}}, {new: true});
-    })
-    .then(function(dbArticle) {
+app.post("/unsaved/:id", function(req, res) {
+    console.log(req.params)
+    db.Article.findOneAndUpdate({_id: req.params.id}, {saved: false}, {new: false})
+    .then(function(dbArticle){
         res.json(dbArticle);
     })
-    .catch(function(err) {
+    .catch(function(err){
         res.json(err)
     })
-})
+});
+
+
+//Post new note
+app.post("/articles/:id", function(req, res) {
+    db.Note.create(req.body).then(function(dbNote) {
+        return db.Article.findOneAndUpdate({_id: req.params.id }, { $push: { notes: dbNote._id}}, {new: true});
+    }).then(function(dbArticle) {
+        res.json(dbArticle);
+    }).catch(function(err) {
+        res.json(err)
+    })
+});
+
+// Deleting a note
+app.post("/deletenote/", function(req, res) {
+    console.log('Hello World!');
+    console.log(req.body);
+    db.Note.remove({ 
+        _id: req.body.id   // To Do: Also delete the note id from the article's notes array
+    }).then(function(dbNote) {
+        res.json(dbNote);
+    }).catch(function(err) {
+        res.json(err);
+    })
+});
+
+// Route for grabbing a specific Article by id, populate it with it's note
+app.get("/articles/:id", function(req, res) {
+    // Using the id passed in the id parameter, prepare a query that finds the matching one in our db...
+    db.Article.findOne({ _id: req.params.id })
+      // ..and populate all of the notes associated with it
+      .populate("notes")
+      .then(function(dbArticle) {
+        // If we were able to successfully find an Article with the given id, send it back to the client
+        res.json(dbArticle);
+      })
+      .catch(function(err) {
+        // If an error occurred, send it to the client
+        res.json(err);
+      });
+  });
 
 // Start the server
 app.listen(PORT, function() {

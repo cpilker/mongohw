@@ -42,7 +42,7 @@
     </thead>
     <tbody>
         {{#each article}}
-            <tr><td> {{this.title}}</td><td>{{this.summary}}</a></td><td><button class="btn btn-primary note" data={{this._id}}>Note</button></td><td><button class="btn btn-danger save" data={{this._id}} data-state="true">Remove</button></td></tr>
+            <tr><td> {{this.title}}</td><td>{{this.summary}}</a></td><td><button class="btn btn-primary note" data={{this._id}}>Note</button></td><td><button class="btn btn-danger unsave" data={{this._id}} data-state="true">Remove</button></td></tr>
         {{/each}}
     </tbody>
 </table>
@@ -58,6 +58,9 @@
         </button> --}}
       </div>
       <div class="modal-body">
+        <div class="savedNotes">
+          <!-- saved note here -->
+        </div>
         <form>
             <div class="form-group">
                 <input type="text" class="form-control" id="mynote" placeholder="Enter your note here">
@@ -65,7 +68,7 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" id="submit">Submit</button>
+        <button type="button" class="btn btn-primary" id="submitNote">Submit</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
     </div>
