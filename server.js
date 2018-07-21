@@ -13,7 +13,7 @@ var axios = require("axios");
 var db = require('./models');
 
 var PORT = process.env.PORT || 3000;
-
+// var PORT = 3000;
 // Initialize Express
 var app = express();
 
@@ -27,7 +27,8 @@ app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set('view engine', 'handlebars');
 
 // Connect to the Mongo DB
-var MONGODB_URI = process.env.MONGODB_URI //||"mongodb://localhost/mongohw";
+var MONGODB_URI = process.env.MONGODB_URI 
+//"mongodb://localhost/mongohw";
 mongoose.Promise = Promise;
 mongoose.connect(MONGODB_URI);
 //Routes here

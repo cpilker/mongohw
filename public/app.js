@@ -76,19 +76,19 @@ function loadNotes(id) {
     $('.modal').modal('show');
 }
 
-$("#submitNote").on("click", function() {
-    console.log("Actively saving note");
-    id = $(this).attr("data")
-    console.log(id)
-    $.ajax({
-        method: "POST",
-        url: "/articles/" + id,
-    }).then(function(data){
-        console.log(data)
-        console.log("save complete")
-        $('.modal').modal('hide')
-    })
-})
+// $("#submitNote").on("click", function() {
+//     console.log("Actively saving note");
+//     id = $(this).attr("data")
+//     console.log(id)
+//     $.ajax({
+//         method: "POST",
+//         url: "/articles/" + id,
+//     }).then(function(data){
+//         console.log(data)
+//         console.log("save complete")
+//         $('.modal').modal('hide')
+//     })
+// })
 
 $(document).on("click", '#submitNote', function() {
     id = $(this).attr("data");
